@@ -8,7 +8,10 @@ require('dotenv').config();
 
 const nxTerminal = new NxTerminal();
 const client = new Client({
-	authStrategy: new LocalAuth({ clientId: "nx-client" })
+	authStrategy: new LocalAuth({ clientId: "nx-client" }),
+  puppeteer: {
+    executablePath: '/usr/bin/google-chrome-stable',
+  }
 });
 
 client.on('qr', (qr) => {
@@ -37,11 +40,15 @@ client.on('message', async(msg) => {
 
 	const predicted = await nxTerminal.predict(msg.body)
 	for (msgObj of predicted) {
-		if (["text", "video", "document", "animation"].includes(msgObj.msgType)) {
+		if (["text"].includes(msgObj.msgType)) {
 			await client.sendMessage(sender, msgObj.msg);
-		} else if (msgObj.msgType === "photo") {
+		} else if (["photo"].includes(msgObj.msgType)) {
 			const media = await MessageMedia.fromUrl(msgObj.msg);
 			await client.sendMessage(sender, media);
+		} else if (["audio", "video", "document", "animation"].includes(msgObj.msgType)) {
+			const media = await MessageMedia.fromUrl(msgObj.msg);
+			await client.sendMessage(sender, media, { sendMediaAsDocument: true });
+			await client.sendMessage(sender, msgObj.msg);
 		}
 	}
 });
