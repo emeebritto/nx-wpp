@@ -6,6 +6,7 @@
     "@wppconnect-team/wppconnect": "^1.19.1",
     "axios": "^1.2.5",
     "dotenv": "^16.0.3",
+    "express": "^4.18.2",
     "qrcode-terminal": "^0.12.0",
     "whatsapp-web.js": "^1.16.4-alpha.0"
   }
