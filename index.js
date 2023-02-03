@@ -38,6 +38,8 @@ client.on('message', async(msg) => {
 	const sender = msg.from;
 	if (command.includes("stick")) return generateSticker(msg, sender);
 
+	return;
+
 	const predicted = await nxTerminal.predict(msg.body)
 	for (msgObj of predicted) {
 		if (["text"].includes(msgObj.msgType)) {

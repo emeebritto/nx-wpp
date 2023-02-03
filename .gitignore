@@ -1,4 +1,4 @@
-.wwebjs_auth
+
 
 # Logs
 logs
@@ -104,3 +104,4 @@ dist
 
 # TernJS port file
 .tern-port
+.vercel
